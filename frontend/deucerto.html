@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>deu certo</h1>
+</body>
+<script>
+
+    window.addEventListener("load", function(event) {
+        const urlParams = new URLSearchParams(window.location.search);
+        const myParam = urlParams.get('code');
+        console.log(myParam)
+
+        var myHeaders = new Headers();
+
+        var options = {
+            method: 'POST',
+            headers: myHeaders,
+            mode: 'no-cors',
+            cache: 'default',
+            body: myParam
+        };
+
+        fetch('http://localhost:8080/connection/codeRefresh/', options)
+            .then((response) => console.log(response));
+    });
+
+</script>
+</html>

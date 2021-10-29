@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Spotify</title>
+</head>
+<body id="teste">
+  <form>
+      <button type="button" onclick="testando()">bota</button>
+  </form>
+</body>
+
+<script>
+    function testando() {
+        var myHeaders = new Headers();
+
+        var myInit = {
+            method: 'GET',
+            headers: myHeaders,
+            mode: 'cors',
+            cache: 'default'
+        };
+
+        fetch('http://localhost:8080/connection/conectaTudo', myInit)
+                .then((response) => response.json())
+                .then((loginData) => console.log(loginData));
+
+    }
+  // function testando(){
+  //     fetch("http://localhost:8080/connection/conectaTudo")
+  //       .then((response) => {
+  //           return console.log(response);
+  //       } ).catch((response) => {console.log(response)})
+  // }
+
+</script>
+
+</html>
