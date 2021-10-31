@@ -1,16 +1,13 @@
 package com.api.spotifyapi.controller;
 
-import com.api.spotifyapi.SpotifyApiApplication;
+import com.api.spotifyapi.model.Auth;
 import com.wrapper.spotify.SpotifyApi;
 import com.wrapper.spotify.SpotifyHttpManager;
 import com.wrapper.spotify.exceptions.SpotifyWebApiException;
 import com.wrapper.spotify.model_objects.credentials.AuthorizationCodeCredentials;
 import com.wrapper.spotify.model_objects.specification.User;
-import com.wrapper.spotify.requests.authorization.authorization_code.AuthorizationCodeRefreshRequest;
 import com.wrapper.spotify.requests.authorization.authorization_code.AuthorizationCodeRequest;
 import com.wrapper.spotify.requests.authorization.authorization_code.AuthorizationCodeUriRequest;
-import com.wrapper.spotify.requests.authorization.authorization_code.pkce.AuthorizationCodePKCERefreshRequest;
-import com.wrapper.spotify.requests.authorization.authorization_code.pkce.AuthorizationCodePKCERequest;
 import com.wrapper.spotify.requests.data.users_profile.GetCurrentUsersProfileRequest;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,21 +15,16 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.apache.hc.core5.http.ParseException;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.websocket.server.PathParam;
 import java.io.IOException;
 import java.net.URI;
-import java.util.concurrent.CancellationException;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.CompletionException;
 
 @RestController
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
+@CrossOrigin(origins = "http://localhost:63342")
 @RequestMapping(value="/connection", method = {RequestMethod.GET,RequestMethod.POST})
 public class SpotifyController {
 
@@ -47,7 +39,7 @@ public class SpotifyController {
             .build();
 
     @GetMapping("/setaSessao")
-    public URI geraSessao() {
+    public Auth geraSessao() {
 
         final AuthorizationCodeUriRequest authorizationCodeUriRequest = spotifyApi.authorizationCodeUri()
                 .scope("user-read-email")
@@ -55,9 +47,10 @@ public class SpotifyController {
 
         final URI uri = authorizationCodeUriRequest.execute();
 
-        System.out.println("GET SETA");
+        System.out.println("GET SETA " + uri.toString());
+        Auth auth = new Auth(uri.toString());
 
-        return uri;
+        return auth;
     }
 
     @PostMapping("/setaSessao/{code}")

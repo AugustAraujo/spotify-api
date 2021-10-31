@@ -21,9 +21,9 @@
             cache: 'default'
         };
 
-        fetch('http://localhost:8080/connection/conectaTudo', myInit)
+        fetch('http://localhost:8080/connection/setaSessao', myInit)
                 .then((response) => response.json())
-                .then((loginData) => console.log(loginData));
+                .then((loginData) => window.location.replace(loginData.authURL));
 
     }
   // function testando(){
