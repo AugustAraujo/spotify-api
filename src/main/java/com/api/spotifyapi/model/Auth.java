@@ -1,7 +1,11 @@
 package com.api.spotifyapi.model;
 
+import java.net.URI;
+
+
 public class Auth {
     private String authURL;
+
 
     public Auth(String authURL) {
         this.authURL = authURL;
@@ -14,4 +18,5 @@ public class Auth {
     public void setAuthURL(String authURL) {
         this.authURL = authURL;
     }
+
 }

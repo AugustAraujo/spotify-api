@@ -3,10 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <script src="https://code.jquery.com/jquery-1.9.1.js"></script>
 </head>
 <body>
-    <h1>deu certo</h1>
 </body>
 
 <script src="/webjars/jquery/3.6.0/jquery.js" type="text/javascript"></script>
@@ -16,38 +14,26 @@
 
 
 
-    window.addEventListener("load", function(event) {
+    window.addEventListener("load", async function (event) {
         const urlParams = new URLSearchParams(window.location.search);
-        const myParam = urlParams.get('code');
-        console.log(myParam)
+        const code = urlParams.get('code');
+        console.log(code)
 
         var myHeaders = new Headers();
 
         var options = {
             method: 'POST',
             headers: myHeaders,
-            mode: 'no-cors',
-            cache: 'default',
-            body: myParam
+            mode: 'cors',
+            cache: 'default'
         };
 
-            //Inicio da funcao
-            $.ajax({
-                //Metodo utilizado
-                type: "POST",
-                //Pagina que recebe os daods
-                url: "http://localhost:8080/connection/currentUser/" + myParam,
-                //String de dados enviada
-                data: "Code="+ myParam,
-                //Inicio da funcao que requisita a resposta da pagina onde recebeu os dados
-                success: function(msg){
-                    alert( "Sucesso! " + msg );
+        await fetch('http://localhost:8080/connection/setaSessao/' + code, options)
+            .then(console.log("bom dia"));
 
+        window.location.href ="http://localhost:63342/spotify-api/frontend/welcome.html";
 
-                }
-            });
-
-        });
+    });
 
 </script>
 </html>
