@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    <style>
+        .card{
+            width: 50%;
+            height: 50%;
+            position: absolute;
+            top:0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: auto;
+            border: black;
+            border-radius: 5px;
+        }
+        body{
+            background-color: #232723;
+        }
+        h5{
+            text-align: center;
+            background-color: #457e59;
+            color: #e1ece3
+        }
+        .card-body{
+            padding:0
+        }
+        .card-img-top{
+            width: 25%;
+            margin-left: 37%;
+        }
+        p{
+            font-weight: bold;
+            text-align: center;
+        }
+        li{
+            text-align: center;
+            background-color: #457e59 !important;
+            color: #e1ece3;
+            font-weight: bold;
+        }
+
+        a{
+            text-decoration: none;
+            color: #e1ece3;
+        }
+    </style>
+</head>
+<body id="corpo">
+<tbody>
+
+</tbody>
+</body>
+<script>
+
+  window.addEventListener("load", async function (event) {
+
+      var myHeaders = new Headers();
+
+      var options = {
+          method: 'POST',
+          headers: myHeaders,
+          mode: 'cors',
+          cache: 'default'
+      };
+
+      let user;
+
+      await fetch('http://localhost:8080/user/profile', options)
+          .then((response) => response.json())
+          .then((userData) => user = userData);
+
+      let body = document.getElementById("corpo");
+
+      var html = "<div class='card'>";
+      html += "<div class=\"card-body\">";
+      html += "<h5 class=\"card-title\">Seja bem-vindo!</h5>";
+      html += "<p class=\"card-text\">Você está conectado como: " + user.displayName + "</p>";
+      html += "<img class=\"card-img-top\" src=" + user.images[0].url + " alt=\"Card image cap \" >";
+      html += "</div>";
+      html += "<ul class=\"list-group list-group-flush\">";
+      html += "<li class=\"list-group-item\"><a href=\"#\">Acessar</a></li>";
+      html += "</ul>";
+      html += "</div>";
+
+      $('body').append(html);
+  });
+
+</script>
+</html>
