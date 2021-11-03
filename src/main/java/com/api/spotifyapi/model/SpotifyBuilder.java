@@ -19,11 +19,31 @@ public class SpotifyBuilder {
     private URI redirectUri = SpotifyHttpManager.makeUri("http://localhost:63342/spotify-api/frontend/deucerto.html/");
 
     public SpotifyBuilder() {
-        this.spotifyApi = new SpotifyApi.Builder()
-                .setClientId(this.clientId)
-                .setClientSecret(this.clientSecret)
-                .setRedirectUri(this.redirectUri)
-                .build();
-
+        System.out.println("Chamada bem sucedida!");
     }
+
+    public SpotifyApi BuilderSet() {
+        this.spotifyApi = new SpotifyApi.Builder().setClientId(this.clientId).setClientSecret(this.clientSecret)
+                .setRedirectUri(this.redirectUri).build();
+
+        return spotifyApi;
+    }
+
+    public SpotifyApi getBuilderSet(){
+        return spotifyApi;
+    }
+
+    public void setBuilderSet(SpotifyApi spotifyApi) {
+        this.spotifyApi = spotifyApi;
+    }
+
+    public SpotifyApi getSpotifyApi() {
+        return null;
+    }
+
+    public void setAuthURL(SpotifyApi spotifyApi) {
+        this.spotifyApi = spotifyApi;
+    }
+
 }
+

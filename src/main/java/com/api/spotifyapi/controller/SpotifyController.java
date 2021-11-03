@@ -40,10 +40,12 @@ public class SpotifyController {
 //            .setRedirectUri(this.redirectUri)
 //            .build();
 
+    SpotifyApi spotifyApi = new SpotifyBuilder().BuilderSet();
+
     @GetMapping("/setaSessao")
     public Auth geraSessao() {
 
-        SpotifyBuilder spotifyApi = new SpotifyBuilder();
+
 
         final AuthorizationCodeUriRequest authorizationCodeUriRequest = spotifyApi.authorizationCodeUri()
                 .scope("user-read-email")

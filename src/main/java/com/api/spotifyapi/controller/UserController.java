@@ -1,5 +1,6 @@
 package com.api.spotifyapi.controller;
 
+import com.api.spotifyapi.model.SpotifyBuilder;
 import com.wrapper.spotify.SpotifyApi;
 import com.wrapper.spotify.SpotifyHttpManager;
 import com.wrapper.spotify.exceptions.SpotifyWebApiException;
@@ -16,8 +17,6 @@ import java.io.IOException;
 import java.net.URI;
 
 @RestController
-@NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
 @CrossOrigin(origins = "http://localhost:63342")
@@ -27,6 +26,8 @@ public class UserController {
 
     @GetMapping("/profile")
     private User getCurrentUserProfile(){
+
+        SpotifyApi spotifyApi = new SpotifyBuilder().getBuilderSet();
         final GetCurrentUsersProfileRequest getCurrentUsersProfileRequest = spotifyApi.getCurrentUsersProfile().build();
         try{
             final User user = getCurrentUsersProfileRequest.execute();
