@@ -62,28 +62,35 @@
 
   window.addEventListener("load", async function (event) {
 
+      const user = JSON.parse(localStorage.getItem("user"));
+
       var myHeaders = new Headers();
 
       var options = {
-          method: 'POST',
+          method: 'GET',
           headers: myHeaders,
           mode: 'cors',
           cache: 'default'
       };
 
-      let user;
+      let currentUser;
 
-      await fetch('http://localhost:8080/user/profile', options)
+      await fetch('http://localhost:8080/user/profile/' + user.accessToken, options)
           .then((response) => response.json())
-          .then((userData) => user = userData);
+          .then((userData) => currentUser = userData);
+
+
+          await fetch('http://localhost:8080/user/myplaylists/' + user.accessToken, options)
+              .then((response) => response.json())
+              .then((userPlaylists) => console.log(userPlaylists))
 
       let body = document.getElementById("corpo");
 
       var html = "<div class='card'>";
       html += "<div class=\"card-body\">";
       html += "<h5 class=\"card-title\">Seja bem-vindo!</h5>";
-      html += "<p class=\"card-text\">Você está conectado como: " + user.displayName + "</p>";
-      html += "<img class=\"card-img-top\" src=" + user.images[0].url + " alt=\"Card image cap \" >";
+      html += "<p class=\"card-text\">Você está conectado como: " + currentUser.displayName + "</p>";
+      html += "<img class=\"card-img-top\" src=" + currentUser.images[0].url + " alt=\"Card image cap \" >";
       html += "</div>";
       html += "<ul class=\"list-group list-group-flush\">";
       html += "<li class=\"list-group-item\"><a href=\"#\">Acessar</a></li>";

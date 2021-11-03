@@ -29,6 +29,14 @@ public class SpotifyBuilder {
         return spotifyApi;
     }
 
+    public SpotifyApi accessTokenBuilder(String accessToken) {
+        SpotifyApi spotifyApi = new SpotifyApi.Builder()
+                .setAccessToken(accessToken)
+                .build();
+
+        return spotifyApi;
+    }
+
     public SpotifyApi getBuilderSet(){
         return spotifyApi;
     }

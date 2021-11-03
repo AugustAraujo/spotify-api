@@ -29,7 +29,10 @@
         };
 
         await fetch('http://localhost:8080/connection/setaSessao/' + code, options)
-            .then(console.log("bom dia"));
+            .then((response) => response.json())
+            .then((user) => {
+                localStorage.setItem("user", JSON.stringify(user))
+            });
 
         window.location.href ="http://localhost:63342/spotify-api/frontend/welcome.html";
 

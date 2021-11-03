@@ -4,7 +4,10 @@ import com.api.spotifyapi.model.SpotifyBuilder;
 import com.wrapper.spotify.SpotifyApi;
 import com.wrapper.spotify.SpotifyHttpManager;
 import com.wrapper.spotify.exceptions.SpotifyWebApiException;
+import com.wrapper.spotify.model_objects.specification.Paging;
+import com.wrapper.spotify.model_objects.specification.PlaylistSimplified;
 import com.wrapper.spotify.model_objects.specification.User;
+import com.wrapper.spotify.requests.data.playlists.GetListOfCurrentUsersPlaylistsRequest;
 import com.wrapper.spotify.requests.data.users_profile.GetCurrentUsersProfileRequest;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,10 +27,11 @@ import java.net.URI;
 
 public class UserController {
 
-    @GetMapping("/profile")
-    private User getCurrentUserProfile(){
+    @GetMapping("/profile/{accessToken}")
+    private User getCurrentUserProfile(@PathVariable String accessToken){
 
-        SpotifyApi spotifyApi = new SpotifyBuilder().getBuilderSet();
+        SpotifyApi spotifyApi = new SpotifyBuilder().accessTokenBuilder(accessToken);
+
         final GetCurrentUsersProfileRequest getCurrentUsersProfileRequest = spotifyApi.getCurrentUsersProfile().build();
         try{
             final User user = getCurrentUsersProfileRequest.execute();
@@ -39,6 +43,28 @@ public class UserController {
             return user;
 
         } catch (IOException | SpotifyWebApiException | ParseException e){
+            System.out.println("Error: " + e.getMessage());
+            return null;
+        }
+
+    }
+
+    @GetMapping("/myplaylists/{accessToken}")
+    private Paging<PlaylistSimplified> getCurrentUserPlaylists(@PathVariable String accessToken) {
+        SpotifyApi spotifyApi = new SpotifyBuilder().accessTokenBuilder(accessToken);
+
+        final GetListOfCurrentUsersPlaylistsRequest getListOfCurrentUsersPlaylistsRequest = spotifyApi
+                .getListOfCurrentUsersPlaylists()
+//          .limit(10)
+//          .offset(0)
+                .build();
+
+        try {
+            final Paging<PlaylistSimplified> playlistSimplifiedPaging = getListOfCurrentUsersPlaylistsRequest.execute();
+
+            System.out.println("Total: " + playlistSimplifiedPaging.getTotal());
+            return playlistSimplifiedPaging;
+        } catch (IOException | SpotifyWebApiException | ParseException e) {
             System.out.println("Error: " + e.getMessage());
             return null;
         }
