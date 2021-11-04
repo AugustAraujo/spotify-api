@@ -9,6 +9,7 @@ import com.wrapper.spotify.model_objects.specification.PlaylistSimplified;
 import com.wrapper.spotify.model_objects.specification.User;
 import com.wrapper.spotify.requests.data.playlists.GetListOfCurrentUsersPlaylistsRequest;
 import com.wrapper.spotify.requests.data.users_profile.GetCurrentUsersProfileRequest;
+import com.wrapper.spotify.requests.data.users_profile.GetUsersProfileRequest;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -63,6 +64,17 @@ public class UserController {
             final Paging<PlaylistSimplified> playlistSimplifiedPaging = getListOfCurrentUsersPlaylistsRequest.execute();
 
             System.out.println("Total: " + playlistSimplifiedPaging.getTotal());
+
+            String nomePlaylist;
+
+            for(var num=0; num < playlistSimplifiedPaging.getTotal(); num++){
+                System.out.println(playlistSimplifiedPaging.getItems()[num].getName());
+                if (playlistSimplifiedPaging.getItems()[num].getName().contains("Daily Mix")) {
+                    System.out.println("Encontrado: " + playlistSimplifiedPaging.getItems()[num].getName());
+                }
+
+            }
+
             return playlistSimplifiedPaging;
         } catch (IOException | SpotifyWebApiException | ParseException e) {
             System.out.println("Error: " + e.getMessage());
@@ -70,4 +82,22 @@ public class UserController {
         }
 
     }
+
+
+
+//    @GetMapping("/otherProfile/{}/{ID}")
+//    private User getUserProfile(@PathVariable String ID){
+//        final GetUsersProfileRequest getUsersProfileRequest = spotifyApi.getUsersProfile(ID).build();
+//
+//        try{
+//            final User user = getUsersProfileRequest.execute();
+//
+//            System.out.println("Display name: " + user.getDisplayName());
+//
+//            return user;
+//        } catch (IOException | SpotifyWebApiException | ParseException e){
+//            System.out.println("Error: " + e.getMessage());
+//            return null;
+//        }
+//    }
 }

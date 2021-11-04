@@ -30,16 +30,6 @@ import java.net.URI;
 @RequestMapping(value="/connection", method = {RequestMethod.GET,RequestMethod.POST})
 public class SpotifyController {
 
-//    public String clientId = "423753d0e3334751a589992bb2daa084";
-//    public String clientSecret = "2f22a02667774619b26a2f49c0f61e8a";
-//    public URI redirectUri = SpotifyHttpManager.makeUri("http://localhost:63342/spotify-api/frontend/deucerto.html/");
-//
-//    SpotifyApi spotifyApi = new SpotifyApi.Builder()
-//            .setClientId(this.clientId)
-//            .setClientSecret(this.clientSecret)
-//            .setRedirectUri(this.redirectUri)
-//            .build();
-
     SpotifyApi spotifyApi = new SpotifyBuilder().BuilderSet();
 
     @GetMapping("/setaSessao")
@@ -99,21 +89,5 @@ public class SpotifyController {
 //        }
 //
 //    }
-
-    @GetMapping("/user/profile/{ID}")
-    private User getUserProfile(@PathVariable String ID){
-        final GetUsersProfileRequest getUsersProfileRequest = spotifyApi.getUsersProfile(ID).build();
-
-        try{
-            final User user = getUsersProfileRequest.execute();
-
-            System.out.println("Display name: " + user.getDisplayName());
-
-            return user;
-        } catch (IOException | SpotifyWebApiException | ParseException e){
-            System.out.println("Error: " + e.getMessage());
-            return null;
-        }
-    }
 
 }
