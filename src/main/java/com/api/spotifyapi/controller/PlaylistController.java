@@ -1,5 +1,6 @@
 package com.api.spotifyapi.controller;
 
+import com.api.spotifyapi.model.Playlist;
 import com.api.spotifyapi.model.SpotifyBuilder;
 import com.wrapper.spotify.SpotifyApi;
 import com.wrapper.spotify.exceptions.SpotifyWebApiException;
@@ -19,24 +20,25 @@ import java.lang.reflect.Parameter;
 public class PlaylistController {
 
     @PostMapping("/criaPlaylist/{accessToken}")
-    public void criaPlaylist(@RequestBody String armazena, @PathVariable String accessToken){
+    public void criaPlaylist(@RequestBody Playlist playlistData, @PathVariable String accessToken){
 
-        String[] teste = armazena.split(":");
-        String[] teste2 = teste[1].split(",");
+        String url = playlistData.getUrl();
+        String name = playlistData.getName();
 
-        SpotifyApi spotifyApi = new SpotifyBuilder().accessTokenBuilder(accessToken);
+        System.out.println(url + name);
+        System.out.println(accessToken);
 
-        final GetCurrentUsersProfileRequest getCurrentUsersProfileRequest = spotifyApi.getCurrentUsersProfile().build();
-
-        System.out.println(teste2[0] + teste[2]);
-
-        try{
-            final User user = getCurrentUsersProfileRequest.execute();
-
-            System.out.println("ID" + user.getId());
-        } catch (IOException | SpotifyWebApiException | ParseException e){
-            System.out.println("erro: " + e.getMessage());
-        }
+//        SpotifyApi spotifyApi = new SpotifyBuilder().accessTokenBuilder(accessToken);
+//
+//        final GetCurrentUsersProfileRequest getCurrentUsersProfileRequest = spotifyApi.getCurrentUsersProfile().build();
+//
+//        try{
+//            final User user = getCurrentUsersProfileRequest.execute();
+//
+//            System.out.println("ID" + user.getId());
+//        } catch (IOException | SpotifyWebApiException | ParseException e){
+//            System.out.println("erro: " + e.getMessage());
+//        }
 
 
 

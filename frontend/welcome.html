@@ -60,31 +60,31 @@
 </body>
 <script>
 
-  window.addEventListener("load", async function (event) {
+    const user = JSON.parse(localStorage.getItem("user"));
 
-      const user = JSON.parse(localStorage.getItem("user"));
+    const header = new Headers({'content-type': 'application/json'});
 
-      var myHeaders = new Headers();
+    const getOptions = {
+        method: 'GET',
+        headers: header,
+        mode: 'cors',
+    };
 
-      var options = {
-          method: 'GET',
-          headers: myHeaders,
-          mode: 'cors',
-          cache: 'default'
-      };
+    window.addEventListener("load", async function (event) {
 
       let currentUser;
 
-      await fetch('http://localhost:8080/user/profile/' + user.accessToken, options)
+      await fetch('http://localhost:8080/user/profile/' + user.accessToken, getOptions)
           .then((response) => response.json())
           .then((userData) => currentUser = userData);
 
+      //
+      //  --Pega playlists do usuario
+      //     await fetch('http://localhost:8080/user/myplaylists/' + user.accessToken, options)
+      //         .then((response) => response.json())
+      //         .then((userPlaylists) => console.log(userPlaylists))
 
-          await fetch('http://localhost:8080/user/myplaylists/' + user.accessToken, options)
-              .then((response) => response.json())
-              .then((userPlaylists) => console.log(userPlaylists))
-
-      let body = document.getElementById("corpo");
+      // let body = document.getElementById("corpo");
 
       var html = "<div class='card'>";
       html += "<div class=\"card-body\">";
@@ -99,35 +99,31 @@
       html += "</ul>";
       html += "</div>";
 
-
-
       $('body').append(html);
-  });
+    });
 
-  function handleSalvaPlaylist(){
-      var playlistURL =  document.getElementById('playlistURL').value;
-      var playlistName = document.getElementById('playlistName').value;
-      var armazena = {playlistURL, playlistName};
-      salvaPlaylist(armazena);
-  }
+    function handleSalvaPlaylist(){
+      const url =  document.getElementById('playlistURL').value;
+      const name = document.getElementById('playlistName').value;
+      const playlistData = {url, name};
 
-  async function salvaPlaylist(armazena) {
+      salvaPlaylist(playlistData);
+    }
 
-      const user = JSON.parse(localStorage.getItem("user"));
+    async function salvaPlaylist(playlistData) {
 
-      var myHeaders = new Headers();
+        const postOptions = {
+            method: 'POST',
+            mode: 'cors',
+            headers: header,
+            body: JSON.stringify(playlistData)
+        };
 
-      var options = {
-          method: 'POST',
-          headers: myHeaders,
-          mode: 'cors',
-          cache: 'default',
-          body: JSON.stringify(armazena)
-      };
-
-      await fetch('http://localhost:8080/playlist/criaPlaylist/' + user.accessToken, options)
+        await fetch('http://localhost:8080/playlist/criaPlaylist/' + user.accessToken, postOptions)
                 .then((response) => response.json())
                 .then((response) => console.log(response))
-  }
+
+    }
+
 </script>
 </html>
