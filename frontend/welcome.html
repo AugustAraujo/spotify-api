@@ -10,19 +10,16 @@
 
     <style>
         .card{
-            width: 50%;
-            height: 50%;
-            position: absolute;
-            top:0;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            margin: auto;
+            width: 330px;
+            height: 380px;
+            margin: 150px 100px;
             border: black;
             border-radius: 5px;
         }
         body{
             background-color: #232723;
+            display: flex;
+            justify-content: center;
         }
         h5{
             text-align: center;
@@ -51,19 +48,26 @@
             text-decoration: none;
             color: #e1ece3;
         }
+
+        iframe {
+            margin: 150px;
+        }
+
     </style>
 </head>
 <body id="corpo">
-<tbody>
-
-</tbody>
+    <div id="main-form"></div>
+    <div id="playlist-container"></div>
 </body>
+<script src="js/renderHTML.js"/></script>
+<script src="js/createPlaylist.js"></script>
 <script>
 
     const user = JSON.parse(localStorage.getItem("user"));
+    let currentUser;
+    let createdPlaylistID;
 
-    const header = new Headers({'content-type': 'application/json'});
-
+    const header = new Headers({'content-type': 'application/json', 'Authorization': 'Bearer ' + user.accessToken + ''});
     const getOptions = {
         method: 'GET',
         headers: header,
@@ -72,58 +76,13 @@
 
     window.addEventListener("load", async function (event) {
 
-      let currentUser;
-
       await fetch('http://localhost:8080/user/profile/' + user.accessToken, getOptions)
           .then((response) => response.json())
-          .then((userData) => currentUser = userData);
+          .then((userData) => currentUser = userData)
 
-      //
-      //  --Pega playlists do usuario
-      //     await fetch('http://localhost:8080/user/myplaylists/' + user.accessToken, options)
-      //         .then((response) => response.json())
-      //         .then((userPlaylists) => console.log(userPlaylists))
+      renderForm()
 
-      // let body = document.getElementById("corpo");
-
-      var html = "<div class='card'>";
-      html += "<div class=\"card-body\">";
-      html += "<h5 class=\"card-title\">Seja bem-vindo!</h5>";
-      html += "<p class=\"card-text\">Você está conectado como: " + currentUser.displayName + "</p>";
-      html += "<img class=\"card-img-top\" src=" + currentUser.images[0].url + " alt=\"Card image cap \" >";
-      html += "</div>";
-      html += "<ul class=\"list-group list-group-flush\">";
-      html += "<li class=\"list-group-item\"><input type='text' placeholder='Insira o link da playlist' id='playlistURL'></li>";
-      html += "<li class=\"list-group-item\"><input type='text' placeholder='Insira o nome que a playlist será salva' id='playlistName'></li>";
-      html += "<li class=\"list-group-item\"><button type='button' onclick='handleSalvaPlaylist()'>Salvar</a></li>";
-      html += "</ul>";
-      html += "</div>";
-
-      $('body').append(html);
     });
-
-    function handleSalvaPlaylist(){
-      const url =  document.getElementById('playlistURL').value;
-      const name = document.getElementById('playlistName').value;
-      const playlistData = {url, name};
-
-      salvaPlaylist(playlistData);
-    }
-
-    async function salvaPlaylist(playlistData) {
-
-        const postOptions = {
-            method: 'POST',
-            mode: 'cors',
-            headers: header,
-            body: JSON.stringify(playlistData)
-        };
-
-        await fetch('http://localhost:8080/playlist/criaPlaylist/' + user.accessToken, postOptions)
-                .then((response) => response.json())
-                .then((response) => console.log(response))
-
-    }
 
 </script>
 </html>
