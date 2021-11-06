@@ -6,7 +6,6 @@ import java.net.URI;
 public class Auth {
     private String authURL;
 
-
     public Auth(String authURL) {
         this.authURL = authURL;
     }

@@ -14,17 +14,22 @@ import java.net.URI;
 
 public class SpotifyBuilder {
     private SpotifyApi spotifyApi;
-    private String clientId = "423753d0e3334751a589992bb2daa084";
-    private String clientSecret = "2f22a02667774619b26a2f49c0f61e8a";
-    private URI redirectUri = SpotifyHttpManager.makeUri("http://localhost:63342/spotify-api/frontend/deucerto.html/");
+    private String clientId;
+    private String clientSecret;
+    private URI redirectUri;
 
     public SpotifyBuilder() {
-        System.out.println("Chamada bem sucedida!");
+        setClientId("423753d0e3334751a589992bb2daa084");
+        setClientSecret("2f22a02667774619b26a2f49c0f61e8a");
+        setRedirectUri(SpotifyHttpManager.makeUri("http://localhost:63342/spotify-api/frontend/deucerto.html/"));
     }
 
     public SpotifyApi BuilderSet() {
-        this.spotifyApi = new SpotifyApi.Builder().setClientId(this.clientId).setClientSecret(this.clientSecret)
-                .setRedirectUri(this.redirectUri).build();
+        this.spotifyApi = new SpotifyApi.Builder()
+                .setClientId(this.clientId)
+                .setClientSecret(this.clientSecret)
+                .setRedirectUri(this.redirectUri)
+                .build();
 
         return spotifyApi;
     }

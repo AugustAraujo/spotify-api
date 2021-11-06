@@ -36,15 +36,14 @@ public class SpotifyController {
     public Auth geraSessao() {
         
         final AuthorizationCodeUriRequest authorizationCodeUriRequest = spotifyApi.authorizationCodeUri()
-                .scope("user-read-email")
+                .scope("user-read-email,playlist-modify-public,playlist-modify-private")
                 .build();
 
         final URI uri = authorizationCodeUriRequest.execute();
 
-        System.out.println("GET SETA " + uri.toString());
-        Auth auth = new Auth(uri.toString());
+        Auth authURI = new Auth(uri.toString());
         
-        return auth;
+        return authURI;
     }
 
     @PostMapping("/setaSessao/{code}")
@@ -65,7 +64,6 @@ public class SpotifyController {
             System.out.println("Error: " + e.getMessage());
         }
 
-        System.out.println(spotifyApi);
         return spotifyApi;
 
     }
