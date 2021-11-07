@@ -1,8 +1,5 @@
 package com.api.spotifyapi.model;
 
-import java.net.URI;
-
-
 public class Auth {
     private String authURL;
 

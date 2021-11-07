@@ -2,57 +2,109 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Spotify</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
     <style>
-        .card{
-            width: 330px;
-            height: 380px;
-            margin: 150px 100px;
-            border: black;
-            border-radius: 5px;
-        }
         body{
-            background-color: #232723;
+            background-color:#e1ece3;
             display: flex;
             justify-content: center;
         }
-        h5{
+        .login{
+            width: 400px;
+            border: 2px solid #000;
+            border-radius:  5px;
+            color: black;
+            background-color: #1DB954;
+            box-sizing: border-box;
+            padding: 68px 28px;
+        }
+        .usuario{
+            border-radius: 50%;
+            border: 2px black solid;
+        }
+        h1{
+            margin: 0;
+            padding-top: 0;
+            padding-left: 0;
+            padding-bottom: 20px;
+            letter-spacing: 5px;
+            text-transform: uppercase;
             text-align: center;
-            background-color: #457e59;
-            color: #e1ece3
+            font-size: 25px;
         }
-        .card-body{
-            padding:0
-        }
-        .card-img-top{
-            width: 25%;
-            margin-left: 37%;
-        }
-        p{
+        .login p{
+            margin: 0;
+            padding: 0;
             font-weight: bold;
-            text-align: center;
         }
-        li{
-            text-align: center;
-            background-color: #457e59 !important;
-            color: #e1ece3;
+
+        .login input {
+            width: 100%;
+            margin-bottom: 21px;
+        }
+        .login input[type="text"], input[type="password"]{
+            border: none;
+            border-bottom: 1px solid white;
+            background: transparent;
+            outline: none;
+            height: 40px;
+            color: white;
+            font-size: 16px;
+        }
+
+        #enviar{
+            border: none;
+            outline: none;
+            height: 35px;
+            color: #000;
+            background: #fff;
+            border-radius: 20px;
+            transition: 0.2s;
+            border: 1px solid black;
+            width: 340px;
+        }
+
+        #enviar:hover{
+            cursor: pointer;
+            transition: 0.1s;
             font-weight: bold;
         }
 
-        a{
-            text-decoration: none;
-            color: #e1ece3;
+        .login a:hover{
+            transition: 0.2s;
+            color: #ff4d4d;
+            font-weight: bold;
         }
 
-        iframe {
-            margin: 150px;
+        .imagem{
+            display: flex;
+            justify-content: center;
+            margin-bottom: 10%;
+        }
+        body#corpo {
+            background-color: #232723;
+            display: flex;
+            justify-content: center;
+            margin-top: 11%;
+        }
+        div#playlist-container{
+            margin-left: 50px;
+        }
+        div#main-form{
+            margin-right: 50px;
         }
 
+        ::placeholder{
+            color: black;
+        }
+        form{
+            margin-top: 10%;
+        }
     </style>
 </head>
 <body id="corpo">
@@ -75,7 +127,7 @@
     };
 
     window.addEventListener("load", async function (event) {
-
+      console.log(user.accessToken)
       await fetch('http://localhost:8080/user/profile/' + user.accessToken, getOptions)
           .then((response) => response.json())
           .then((userData) => currentUser = userData)
